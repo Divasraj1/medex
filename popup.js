@@ -70,6 +70,7 @@ function checkReminders() {
     reminders.forEach((reminder) => {
         console.log("Reminder time:", reminder.time);
         if (reminder.time === currentTime) {
+            playSound("medexVoice.mp3");
             window.alert(reminder.message);
             console.log("Reminder message:", reminder.message);
         }
