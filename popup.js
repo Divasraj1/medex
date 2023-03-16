@@ -3,6 +3,60 @@ let reminders = [];
 let messageInputs = document.querySelectorAll('.message');
 let timeInputs = document.querySelectorAll('.time');
 let submitButton = document.getElementById('submit');
+let aisubmitButton = document.getElementById('aisubmit');
+let airesponse = document.getElementById('airesponse');
+let question = document.getElementById('aiquestion');
+
+aisubmitButton.addEventListener('click', async () => {
+    const prompt = question.value;
+    console.log("prompt:",prompt);
+    const response = await getAiResponse(prompt);
+    console.log(response);
+    airesponse.innerText = response;
+});
+  
+  async function getAiResponse(prompt) {
+    const response = await fetch('http://localhost:8080/chat', {
+      method: 'POST',
+      body: JSON.stringify({ "query":prompt }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  
+    const { data } = await response.json();
+    return data;
+  }
+
+// aisubmitButton.onclick = function(){
+//     fetch("http://localhost:8080/chat", {
+//         method: "POST",
+//         body: JSON.stringify({
+//             "query": question.value,
+//         }),
+//         headers: {
+//             "Content-Type": "application/json"
+//         }
+//     })
+//     .then((response) => {
+//         if (!response.ok) {
+//             throw new Error('Network response was not ok');
+//           }
+//         return response.json();
+//     })
+//     .then((json) => {
+//         console.log(json);
+//         const resp = document.createElement('p');
+//         resp.innerHTML = json.data;
+//         airesponse.append(resp);
+//     })
+//     .catch((err) => {
+//         console.error('There was an error:', err);
+//         const error = document.createElement('p');
+//         error.innerHTML = 'There was an error fetching the response.';
+//         airesponse.append(error);
+//     });
+// }
 
 submitButton.onclick = function(){
     chrome.alarms.clearAll();
