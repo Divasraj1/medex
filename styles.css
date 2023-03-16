@@ -1,0 +1,158 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+#reminder-form{
+    width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+h2{
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0 0 20px;
+}
+
+table{
+    width: 100%;
+}
+
+th, td{
+    padding: 10px;
+    text-align: left;
+    vertical-align: top;
+}
+
+th{
+    font-weight: bold;
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #ccc;
+}
+
+td{
+    border-bottom: 1px solid #ccc;
+}
+
+input[type="time"], input[type="text"]{
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+}
+
+input[type="button"]{
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+}
+input[type="button"]:hover{
+    background-color: #3e8e41;
+}
+
+#reminder-list{
+    width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+#reminder-list h2{
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0 0 20px;
+}
+
+.reminder{
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    background-color: #f5f5f5;
+    position: relative;
+}
+
+.reminder .time{
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.reminder .message{
+    display: inline-block;
+    width: 80%;
+}
+
+.reminder .delete{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 16px;
+    color: #999;
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+}
+
+.reminder .delete:hover{
+    color: #ff0000;
+}
+#notification {
+    width : 300px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    background-color: #fff;
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 999;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    display: none;
+}
+
+#notification h3{
+    font-size: 16px;
+}
+
+#notification p{
+    font-size: 14px;
+    margin: 0;
+}
+
+#notification .close{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 16px;
+    color: #999;
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+}
+
+#notificaition .close:hover{
+    color: #ff0000;
+}
+
+@media screen and (max-width: 480px) {
+    #reminder-form, #reminder-list, #notification {
+        width: 100%;
+        max-width: 500px;
+    }
+}
