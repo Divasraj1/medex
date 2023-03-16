@@ -12,6 +12,7 @@ submitButton.onclick = function(){
 
         if(message && time){
             let reminder = {message,time};
+            console.log("reminder set:",reminder.message,reminder.time);
             reminders.push(reminder);
         }
     }
@@ -34,22 +35,49 @@ submitButton.onclick = function(){
             chrome.alarms.create(`reminder_${i}_${j}`,{when: alarmTime.getTime()});
         }
     }
+    
+    const dat =localStorage.getItem('reminders');
+    console.log("data:",dat);
     alert('Reminders Set.');
+    
+  chrome.alarms.create("checkReminders", {
+    periodInMinutes: 1 // check every minute
+});
 };
 
-chrome.alarms.onAlarm.addListener(function(alarm){
-    if(alarm.name.startWith('reminder_')){
-        let parts = alarm.name.split('_');
-        let day = parseInt(parts[1]);
-        let index = parseInt(parts[2]);
 
-        let remindersForDay = reminders.filter((reminder) => {
-            return reminder.time && (day === new Date().getDay());
-        });
+function getFormattedTime(timestamp) {
+    var date = new Date(timestamp);
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    return ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2);
+  }
 
-        if(index < remindersForDay.length){
-            let reminder = remindersForDay[index];
-            alert(reminder.message);
-        }
+function checkReminders() {
+    const storedReminders = localStorage.getItem("reminders");
+
+    // If there are stored reminders, parse them into an array
+    let reminders = [];
+    if (storedReminders) {
+      reminders = JSON.parse(storedReminders);
     }
-})
+    // Get the current time as a Unix timestamp
+    const currentTime = getFormattedTime(Date.now());
+    console.log("check reminders");
+    console.log("currentTime: ",currentTime);
+    console.log("reminders",reminders);
+    // Loop through the reminders and show any that are due
+    reminders.forEach((reminder) => {
+        console.log("Reminder time:", reminder.time);
+        if (reminder.time === currentTime) {
+            window.alert(reminder.message);
+            console.log("Reminder message:", reminder.message);
+        }
+    });
+}
+
+function playSound(url) {
+    const audio = new Audio(url);
+    audio.play();
+  } 
+setInterval(checkReminders, 60000);
