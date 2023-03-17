@@ -3,7 +3,7 @@ The AI Powered medicine assitant
 
 
 # Steps to download and test on chrome
- 1 - Download the project from github
+ 1 - Download the project from github </br>
  2 - Go to chrome click on three dots in top right > Go to More Tools > Extensions
  3 - Turn on developer mode from top right
  4 - Click on Load unpacked and browse to the project which you downloaded in step 1 and click on manifest.json
