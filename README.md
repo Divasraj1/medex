@@ -1,4 +1,4 @@
-# medex
+# Medex
 The AI Powered medicine assitant
 
 
