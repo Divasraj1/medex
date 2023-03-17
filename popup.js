@@ -6,6 +6,23 @@ let submitButton = document.getElementById('submit');
 let aisubmitButton = document.getElementById('aisubmit');
 let airesponse = document.getElementById('airesponse');
 let question = document.getElementById('aiquestion');
+let pastmeds = document.getElementById('pastmeds');
+
+function loadData(){
+    const pastdata = JSON.parse(localStorage.getItem('reminders'));
+    if (pastdata) {
+      pastdata.forEach(data => {
+          const listItem = document.createElement('p');
+          listItem.textContent = data.message +" "+ data.time;
+          pastmeds.appendChild(listItem);
+        });
+    }
+}
+
+// Retrieve data from localStorage on extension open
+window.addEventListener('load', () => {
+  loadData();
+});
 
 aisubmitButton.addEventListener('click', async () => {
     const prompt = question.value;
@@ -13,6 +30,7 @@ aisubmitButton.addEventListener('click', async () => {
     const response = await getAiResponse(prompt);
     console.log(response);
     airesponse.innerText = response;
+    loadData();
 });
   
   async function getAiResponse(prompt) {
@@ -28,41 +46,14 @@ aisubmitButton.addEventListener('click', async () => {
     return data;
   }
 
-// aisubmitButton.onclick = function(){
-//     fetch("http://localhost:8080/chat", {
-//         method: "POST",
-//         body: JSON.stringify({
-//             "query": question.value,
-//         }),
-//         headers: {
-//             "Content-Type": "application/json"
-//         }
-//     })
-//     .then((response) => {
-//         if (!response.ok) {
-//             throw new Error('Network response was not ok');
-//           }
-//         return response.json();
-//     })
-//     .then((json) => {
-//         console.log(json);
-//         const resp = document.createElement('p');
-//         resp.innerHTML = json.data;
-//         airesponse.append(resp);
-//     })
-//     .catch((err) => {
-//         console.error('There was an error:', err);
-//         const error = document.createElement('p');
-//         error.innerHTML = 'There was an error fetching the response.';
-//         airesponse.append(error);
-//     });
-// }
-
 submitButton.onclick = function(){
+    console.log("messageInputs size",messageInputs.length);
     chrome.alarms.clearAll();
-    for(let i=0;i<messageInputs.length;i++){
+    for(let i=0;i<messageInputs.length-1;i++){
         let message = messageInputs[i].value;
+        console.log(timeInputs[i].value);
         let time = timeInputs[i].value;
+        console.log(i);
 
         if(message && time){
             let reminder = {message,time};
