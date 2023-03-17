@@ -18,6 +18,12 @@ function loadData(){
         });
     }
 }
+function unLoadData(){
+  const pastdata = JSON.parse(localStorage.getItem('reminders'));
+    if (pastdata) {
+     pastmeds.innerHTML = '';
+    }
+}
 
 // Retrieve data from localStorage on extension open
 window.addEventListener('load', () => {
@@ -26,15 +32,16 @@ window.addEventListener('load', () => {
 
 aisubmitButton.addEventListener('click', async () => {
     const prompt = question.value;
+    airesponse.innerText = "Loading...";
     console.log("prompt:",prompt);
     const response = await getAiResponse(prompt);
     console.log(response);
+    airesponse.innerText = "";
     airesponse.innerText = response;
-    loadData();
 });
   
   async function getAiResponse(prompt) {
-    const response = await fetch('http://localhost:8080/chat', {
+    const response = await fetch('https://chatgptbackend-q050.onrender.com/chat', {
       method: 'POST',
       body: JSON.stringify({ "query":prompt }),
       headers: {
@@ -48,6 +55,8 @@ aisubmitButton.addEventListener('click', async () => {
 
 submitButton.onclick = function(){
     console.log("messageInputs size",messageInputs.length);
+    unLoadData();
+    localStorage.clear();
     chrome.alarms.clearAll();
     for(let i=0;i<messageInputs.length-1;i++){
         let message = messageInputs[i].value;
@@ -85,6 +94,7 @@ submitButton.onclick = function(){
     console.log("data:",dat);
     alert('Reminders Set.');
     
+    loadData();
   chrome.alarms.create("checkReminders", {
     periodInMinutes: 1 // check every minute
 });

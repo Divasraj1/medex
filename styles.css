@@ -4,10 +4,15 @@ body {
     background-color: #f5f5f5;
     margin: 0;
     padding: 0;
+    width: 600px;
+    overflow: hidden;
 }
+body::-webkit-scrollbar {
+    display: none;
+  }
 
 #reminder-form{
-    width: 400px;
+    width: 500px;
     margin: 50px auto;
     padding: 20px;
     border: 1px solid #ccc;
@@ -153,6 +158,6 @@ input[type="button"]:hover{
 @media screen and (max-width: 480px) {
     #reminder-form, #reminder-list, #notification {
         width: 100%;
-        max-width: 500px;
+        
     }
 }
